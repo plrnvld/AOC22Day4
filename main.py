@@ -19,12 +19,18 @@ class Assignment:
         return left_inside_right(self.first_left, self.first_right, self.second_left, self.second_right) or \
         left_inside_right(self.second_left, self.second_right, self.first_left, self.first_right)
 
+    def disjoint(self):
+        return self.first_right < self.second_left or self.first_left > self.second_right
+
+    def overlap(self):
+        return not self.disjoint()
+
 assignments = []
         
 with open('Input.txt') as f:
     for line in f:
         assignments.append(read_assignment(line))
 
-filtered = list(filter(lambda assignment: assignment.inside(), assignments))
+filtered = list(filter(lambda assignment: assignment.overlap(), assignments))
 
 print(len(filtered))
